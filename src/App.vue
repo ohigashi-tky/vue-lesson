@@ -1,47 +1,49 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref, reactive } from 'vue'
+const title = ref('タイトル！！')
+let price = ref(0)
+function increment() {
+  price.value += 1
+  instructor.bio = 'hi'
+  instructor.email = 'test@test.com'
+}
+const info = ref({
+  students: 1000,
+  rating: 4
+})
+const instructor = reactive({
+  name: 'Tanaka',
+  age: 25,
+  sns: {
+    twitter: '@tanaka_twitter',
+    youtube: '@tanaka_youtube'
+  },
+  email: ref('tanaka@example.com')
+})
+instructor.bio = 'hello'
+
+const courseInfo = {
+  section: ref(10),
+  language: ref('Japanese')
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <h1>Title: {{ title }}</h1>
+  <h2>Price: ${{ price }}</h2>
+  <button @click="increment">button</button><br />
+  <h2>Students: {{ info.students }}</h2>
+  <h2>ratio¥ng: {{ info.rating }}</h2>
+  <h2>name: {{ instructor.name }}</h2>
+  <h2>age: {{ instructor.age }}</h2>
+  <h2>bil: {{ instructor.bio }}</h2>
+  <h2>twitter: {{ instructor.sns.twitter }}</h2>
+  <h2>email: {{ instructor.email }}</h2>
+  <h2>Course Info Sections: {{ courseInfo.language.value }}</h2>
 </template>
 
 <style scoped>
 header {
   line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
 }
 </style>
