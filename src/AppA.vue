@@ -1,10 +1,13 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch, watchEffect } from 'vue'
 
 const message = ref('<h1>Hello</h1>')
 const vueURL = ref('https://vuejs.org')
 const vueId = ref('vue-link')
 const count = ref(0)
+const count1 = ref(0)
+const count2 = ref(0)
+const count3 = ref(0)
 function countUp(event, times) {
   count.value++
 }
@@ -14,6 +17,25 @@ const score = ref(0)
 const evaluation = computed(() => {
   return score.value > 3 ? 'Good' : 'Bad'
 })
+watchEffect(() => {
+  // console.log('watchEffect')
+  // console.log(count.value)
+  // setTimeout(() => {
+  //   console.log('after 1 second')
+  // }, 1000)
+})
+watch(count1, (newValue, oldValue) => {
+  console.log('watch')
+  console.log('newValue', newValue)
+  console.log('oldValue', oldValue)
+})
+const isRed = ref(true)
+const isBgBlue = ref(true)
+function toggleClass() {
+  isRed.value = !isRed.value
+  isBgBlue.value = !isBgBlue.value
+}
+const className = ref('red')
 </script>
 <template>
   <div>Hello</div>
@@ -44,4 +66,25 @@ const evaluation = computed(() => {
   <p>{{ score > 3 ? 'Good' : 'Bad' }}</p>
   <p>{{ evaluation }}</p>
   <p>{{ score }}</p>
+  <p>{{ count1 }}</p>
+  <p>{{ count2 }}</p>
+  <p>{{ count3 }}</p>
+  <button @click="count1++">count1+1</button>
+  <button @click="count2++">count2+1</button>
+  <button @click="count3++">count3+1</button>
+  <div class="border" :class="{ red: isRed, 'bg-blue': isBgBlue }">Hello</div>
+  <div :class="[className, { 'bg-blue': isBgBlue }]">Hello</div>
+  <button @click="toggleClass">toggle</button>
+  <div :style="{ color: 'red', backgroundColor: 'blue' }">Hello</div>
 </template>
+<style>
+.red {
+  color: red;
+}
+.bg-blue {
+  background-color: blue;
+}
+.border {
+  border: solid 1px red;
+}
+</style>
